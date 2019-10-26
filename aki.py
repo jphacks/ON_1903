@@ -18,12 +18,14 @@ if __name__ == "__main__":
         target = get_target(df)
         print(f"{target}を使用していますか？")
         if choose():
-            df = df.query(f"{target} != 0") # そのターゲットが使用されている食品のDataFrameを返す
+            # そのターゲットが使用されている食品のDataFrameを返す
+            columns = list(filter(lambda x: x != target, df.query(f"{target} != 0").columns))
+            df = df[[columns]]
             if len(df) == 1:
                 print(df.iloc[0, 0])
                 break
         else:
-            # df = df.query(f"{target} == 0")[list(filter(lambda column: column != target, df.columns))] # そのターゲットが使用されていない食品のDataFrameを返す
+            # そのターゲットが使用されていない食品のDataFrameを取り出す
             df = df[list(map(lambda x: x[0], filter(lambda x: x[1]>0, df.query(f"{target} == 0").sum()[1:].items())))]
 
 # for column in df.columns[1:-1]:
