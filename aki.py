@@ -26,12 +26,6 @@ class Jinn:
         
         return self.df
 
-def choose():
-    tmp = input("y/n:")
-    if tmp == "y":
-        return True
-    else:
-        return False
 
 if __name__ == "__main__":
     jinn = Jinn(path="tmp.csv")
@@ -42,7 +36,7 @@ if __name__ == "__main__":
         target = jinn.update_target() # 質問するtargetを返す
 
         print(f"{target}を使用していますか？")
-        is_choose = choose()
+        is_choose = input("y/n:") == "y"
         df = jinn.update_remining_df(is_choose) # データフレームの更新
         
         if len(df) == 1:
