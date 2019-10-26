@@ -1,6 +1,6 @@
 import pandas as pd
 
-class Akinator:
+class Jinn:
     def __init__(self, path):
         """
         filepath: データのCSVファイルへのパス
@@ -34,16 +34,16 @@ def choose():
         return False
 
 if __name__ == "__main__":
-    akinator = Akinator(path="tmp.csv")
+    jinn = Jinn(path="tmp.csv")
 
     while True:
-        print(akinator.df)
+        print(jinn.df)
 
-        target = akinator.update_target() # 質問するtargetを返す
+        target = jinn.update_target() # 質問するtargetを返す
 
         print(f"{target}を使用していますか？")
         is_choose = choose()
-        df = akinator.update_remining_df(is_choose) # データフレームの更新
+        df = jinn.update_remining_df(is_choose) # データフレームの更新
         
         if len(df) == 1:
             print(df.iloc[0, 0])
