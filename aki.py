@@ -1,5 +1,31 @@
 import pandas as pd
 
+class Akinator:
+    def __init__(self, path):
+        """
+        filepath: データのCSVファイルへのパス
+        """
+        self.default_df = pd.read_csv(path) # デフォルトのデータフレーム（今後は使用しない）
+        self.df = self.default_df # このデータフレームを書き換えながら推測していく
+        self.target = "" # 質問の要素
+
+    def update_target(self):
+        # もっとも使用されている要素を返す
+        self.target = self.df.iloc[:, 1:-1].apply(lambda line: sum(line.values)).idxmax()
+        return self.target
+
+    def update_remining_df(self, choosed):
+        if choosed:
+            # そのターゲットが使用されている食品のDataFrameを返す
+            _df = self.df.query(f"{target} != 0")
+            self.df = _df[list(filter(lambda x: x != target, _df.columns))]
+        else:
+            # そのターゲットが使用されていない食品のDataFrameを返す
+            _df = self.df.query(f"{target} == 0")
+            self.df = _df[list(filter(lambda x: x != target, _df.columns))]
+        
+        return self.df
+
 def choose():
     tmp = input("y/n:")
     if tmp == "y":
@@ -7,25 +33,17 @@ def choose():
     else:
         return False
 
-def get_target(df):
-    # dfのなかで重みの総和が最小の食材を返す
-    return df.iloc[:, 1:-1].apply(lambda line: sum(line.values)).idxmax()
-
 if __name__ == "__main__":
-    df = pd.read_csv("tmp.csv")
+    akinator = Akinator(path="tmp.csv")
 
     while True:
-        print(df)
-        target = get_target(df)
+        print(akinator.df)
+
+        target = akinator.update_target() # 質問するtargetを返す
+
         print(f"{target}を使用していますか？")
-        if choose():
-            # そのターゲットが使用されている食品のDataFrameを返す
-            df = df.query(f"{target} != 0")
-            df = df[list(filter(lambda x: x != target, df.columns))]
-        else:
-            # そのターゲットが使用されていない食品のDataFrameを返す
-            df = df.query(f"{target} == 0")
-            df = df[list(filter(lambda x: x != target, df.columns))]
+        is_choose = choose()
+        df = akinator.update_remining_df(is_choose) # データフレームの更新
         
         if len(df) == 1:
             print(df.iloc[0, 0])
