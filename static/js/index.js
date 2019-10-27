@@ -1,7 +1,6 @@
 let user_id = 0;
 window.onload = function () {
     getNewJinn();
-    getQuestion();
 };
 
 function getNewJinn() {
@@ -14,6 +13,7 @@ function getNewJinn() {
         const resp = this.response;
         console.log(resp);
         user_id = resp.user_id;
+        getQuestion();
     };
 
     request.send();
@@ -47,9 +47,6 @@ function postChoice(choice) {
 
   request.open('POST', `http://localhost:5000/jinn/${user_id}/choice`, true);
   request.setRequestHeader("Content-Type", "application/json");
-  request.setRequestHeader("Access-Control-Request-Method","POST");
-  request.setRequestHeader("Access-Control-Request-Headers","Content-Type");
-  request.setRequestHeader("Origin","http://localhost:5000");
 
   request.onload = function () {
       const resp = this.response;
