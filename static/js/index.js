@@ -51,6 +51,7 @@ function postChoice(choice) {
   request.onload = function () {
       const resp = this.response;
       console.log(resp);
+      getQuestion();
   };
 
   request.send(JSON.stringify(data));
