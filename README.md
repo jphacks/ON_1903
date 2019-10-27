@@ -1,6 +1,7 @@
 # アキネイタージェネレーター
 
 [![アキネイタージェネレーター](image.png)](https://youtu.be/i4qPoudgto0)
+[Youtubeリンク](https://youtu.be/i4qPoudgto0)
 
 ## 製品概要
 ### 意志決定 X Tech
