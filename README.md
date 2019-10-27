@@ -1,6 +1,6 @@
 # アキネイタージェネレーター
 
-[![アキネイタージェネレーター](image.png)](https://youtu.be/i4qPoudgto0)
+[![アキネイタージェネレーター](aki.png)](https://youtu.be/i4qPoudgto0)
 [Youtubeリンク](https://youtu.be/i4qPoudgto0)
 
 ## 製品概要
