@@ -1,4 +1,6 @@
 let user_id = 0;
+let isContinue = true;
+
 window.onload = function () {
     getNewJinn();
 };
@@ -20,9 +22,10 @@ function getNewJinn() {
 }
 
 function onClick(elmnt, choice) {
-  console.log(choice);
-  postChoice(choice);
-
+  if (isContinue) {
+    console.log(choice);
+    postChoice(choice);
+  }
 }
 
 function getQuestion() {
@@ -34,7 +37,8 @@ function getQuestion() {
   request.onload = function () {
       const resp = this.response;
       console.log(resp);
-      document.getElementById('question').innerText = resp.question
+      isContinue =  resp.continue;
+      document.getElementById('question').innerText = resp.question;
   };
 
   request.send();
