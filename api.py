@@ -21,9 +21,15 @@ def question(user_id):
 
     jinn = jinns[user_id]
 
-    target = jinn.update_target() # 質問するtargetを返す
+    (target, flag) = jinn.update_target() # 質問するtargetを返す
+
+    if flag == 1:
+        resp = make_response(jsonify({'question': f'{target}ですか？', 'continue': True}))
+    elif flag == 2:
+        resp = make_response(jsonify({'question': f'{target}', 'continue': False}))
+    else:
+        resp = make_response(jsonify({'question': f'{target}を使用していますか？', 'continue': True}))
     
-    resp = make_response(jsonify({'question': f'{target}を使用していますか？'}))
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 

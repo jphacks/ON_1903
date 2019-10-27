@@ -12,7 +12,13 @@ class Jinn:
     def update_target(self):
         # もっとも使用されている要素を返す
         self.target = self.df.iloc[:, 1:-1].apply(lambda line: sum(line.values)).idxmax()
-        return self.target
+
+        if len(self.df) == 1:
+            print(self.df)
+            return (self.df.iloc[0,0], 1) # 食品がほぼ確定した場合
+        elif len(self.df) == 0:
+            return ("データが不足しています", 2) # 推論対象の食品が全て無くなった場合
+        return (self.target, 0) # 食品が確定していない場合
 
     def update_remining_df(self, choosed):
         if choosed:
