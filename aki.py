@@ -17,12 +17,12 @@ class Jinn:
     def update_remining_df(self, choosed):
         if choosed:
             # そのターゲットが使用されている食品のDataFrameを返す
-            _df = self.df.query(f"{target} != 0")
-            self.df = _df[list(filter(lambda x: x != target, _df.columns))]
+            _df = self.df.query(f"{self.target} != 0")
+            self.df = _df[list(filter(lambda x: x != self.target, _df.columns))]
         else:
             # そのターゲットが使用されていない食品のDataFrameを返す
-            _df = self.df.query(f"{target} == 0")
-            self.df = _df[list(filter(lambda x: x != target, _df.columns))]
+            _df = self.df.query(f"{self.target} == 0")
+            self.df = _df[list(filter(lambda x: x != self.target, _df.columns))]
         
         return self.df
 
