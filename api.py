@@ -1,7 +1,13 @@
 from flask import Flask, jsonify, make_response, request
 import os
+from aki import Jinn
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
+
+jinns = {}
+
+user_id = 0
 
 @app.route('/', methods=['GET'])
 def route():
@@ -9,18 +15,40 @@ def route():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
-@app.route('/q', methods=['GET'])
-def q():
-    resp = make_response(jsonify({'question': '米が使われている？'}))
+@app.route('/jinn/<int:user_id>/question', methods=['GET'])
+def question(user_id):
+    global jinns
+
+    jinn = jinns[user_id]
+
+    target = jinn.update_target() # 質問するtargetを返す
+    
+    resp = make_response(jsonify({'question': f'{target}を使用していますか？'}))
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
-@app.route('/choice', methods=['POST'])
-def choice():
+@app.route('/jinn/<int:user_id>/choice', methods=['POST'])
+def choice(user_id):
+    global jinns
+
+    jinn = jinns[user_id]
+    choiced = request.json['answer']
+    df = jinn.update_remining_df(choiced)
+
     print(request.json)
-    resp = make_response(jsonify({'message': 'ok'}))
+    resp = make_response(jsonify({'result': True}))
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
+
+@app.route('/jinn/new')
+def new_instance():
+    global jinns
+    global user_id 
+
+    _id = user_id
+    jinns[_id] = Jinn(path='tmp.csv')
+    user_id = _id + 1
+    return jsonify({'user_id': _id})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
