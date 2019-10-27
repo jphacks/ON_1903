@@ -33,7 +33,7 @@ def question(user_id):
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
-@app.route('/jinn/<int:user_id>/choice', methods=['POST'])
+@app.route('/jinn/<int:user_id>/answer', methods=['POST'])
 def choice(user_id):
     global jinns
 
