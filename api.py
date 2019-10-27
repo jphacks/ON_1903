@@ -31,7 +31,7 @@ def question(user_id):
         return jsonify({'question': f'{target}を使用していますか？', 'continue': True})
 
 @app.route('/jinn/<int:user_id>/answer', methods=['POST'])
-def choice(user_id):
+def ansewr(user_id):
     global jinns
 
     jinn = jinns[user_id]

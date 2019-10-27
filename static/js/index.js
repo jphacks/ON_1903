@@ -45,7 +45,7 @@ function postChoice(choice) {
 
   const data = {answer: choice};
 
-  request.open('POST', `http://localhost:5000/jinn/${user_id}/choice`, true);
+  request.open('POST', `http://localhost:5000/jinn/${user_id}/answer`, true);
   request.setRequestHeader("Content-Type", "application/json");
 
   request.onload = function () {
