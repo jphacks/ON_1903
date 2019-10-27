@@ -47,7 +47,7 @@ def new_instance():
 
     _id = user_id
     jinns[_id] = Jinn(path='tmp.csv')
-    user_id = _id + 1
+    user_id = user_id + 1
 
     return jsonify({'user_id': _id})
 
