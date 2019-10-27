@@ -24,14 +24,11 @@ def question(user_id):
     (target, flag) = jinn.update_target() # 質問するtargetを返す
 
     if flag == 1:
-        resp = make_response(jsonify({'question': f'{target}ですか？', 'continue': True}))
+        return jsonify({'question': f'{target}ですか？', 'continue': True})
     elif flag == 2:
-        resp = make_response(jsonify({'question': f'{target}', 'continue': False}))
+        return jsonify({'question': f'{target}', 'continue': False})
     else:
-        resp = make_response(jsonify({'question': f'{target}を使用していますか？', 'continue': True}))
-
-    resp.headers['Access-Control-Allow-Origin'] = '*'
-    return resp
+        return jsonify({'question': f'{target}を使用していますか？', 'continue': True})
 
 @app.route('/jinn/<int:user_id>/answer', methods=['POST'])
 def choice(user_id):
