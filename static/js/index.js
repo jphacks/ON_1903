@@ -1,5 +1,7 @@
 let user_id = 0;
 let isContinue = true;
+// let api_config = "https://radiant-basin-04347.herokuapp.com";
+let api_config = "http://localhost:5000";
 
 window.onload = function () {
     getNewJinn();
@@ -8,7 +10,7 @@ window.onload = function () {
 function getNewJinn() {
     const request = new XMLHttpRequest();
 
-    request.open('GET', 'http://localhost:5000/jinn/new', true);
+    request.open('GET', `${api_config}/jinn/new`, true);
     request.responseType = 'json';
 
     request.onload = function () {
@@ -31,7 +33,7 @@ function onClick(elmnt, choice) {
 function getQuestion() {
   const request = new XMLHttpRequest();
 
-  request.open('GET', `http://localhost:5000/jinn/${user_id}/question`, true);
+  request.open('GET', `${api_config}/jinn/${user_id}/question`, true);
   request.responseType = 'json';
 
   request.onload = function () {
@@ -49,7 +51,7 @@ function postChoice(choice) {
 
   const data = {answer: choice};
 
-  request.open('POST', `http://localhost:5000/jinn/${user_id}/answer`, true);
+  request.open('POST', `${api_config}/jinn/${user_id}/answer`, true);
   request.setRequestHeader("Content-Type", "application/json");
 
   request.onload = function () {

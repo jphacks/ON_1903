@@ -19,8 +19,9 @@ class Jinn:
             self.last_target = self.df.iloc[0,0]
             return (self.df.iloc[0,0], 1) # 食品がほぼ確定した場合
         elif len(self.df) == 0:
-            return ("答えは"+self.last_target+"です", 2) # 推論対象の食品が全て無くなった場合
-            # return ("データが不足しています", 2) # 推論対象の食品が全て無くなった場合
+            if self.last_target == "":
+                return ("データが不足しています", 2) # 推論対象の食品が全て無くなった場合
+            return ("あなたが食べたいのは"+self.last_target+"です", 2) # 推論対象の食品が全て無くなった場合
         else:
             return (self.target, 0) # 食品が確定していない場合
 

@@ -47,10 +47,10 @@ def new_instance():
 
     _id = user_id
     jinns[_id] = Jinn(path='tmp.csv')
-    user_id = _id + 1
+    user_id = user_id + 1
 
     return jsonify({'user_id': _id})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(port=port)
