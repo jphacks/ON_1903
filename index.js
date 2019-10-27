@@ -1,23 +1,34 @@
-function onClick(elmnt, choice) {
-  console.log(choice);
+let user_id = 0;
+window.onload = function () {
+    getNewJinn();
+    getQuestion();
+};
 
-  const request = new XMLHttpRequest();
+function getNewJinn() {
+    const request = new XMLHttpRequest();
 
-  request.open('GET', 'http://localhost:5000', true);
-  request.responseType = 'json';
+    request.open('GET', 'http://localhost:5000/jinn/new', true);
+    request.responseType = 'json';
 
-  request.onload = function () {
-      const resp = this.response;
-      console.log(resp);
-  };
+    request.onload = function () {
+        const resp = this.response;
+        console.log(resp);
+        user_id = resp.user_id;
+    };
 
-  request.send();
+    request.send();
 }
 
-function requestQuestion() {
+function onClick(elmnt, choice) {
+  console.log(choice);
+  postChoice(choice);
+
+}
+
+function getQuestion() {
   const request = new XMLHttpRequest();
 
-  request.open('GET', 'http://localhost:5000/q', true);
+  request.open('GET', `http://localhost:5000/jinn/${user_id}/question`, true);
   request.responseType = 'json';
 
   request.onload = function () {
@@ -29,13 +40,16 @@ function requestQuestion() {
   request.send();
 }
 
-function postChoice() {
+function postChoice(choice) {
   const request = new XMLHttpRequest();
 
-  const data = {choice: 0};
+  const data = {answer: choice};
 
-  request.open('GET', 'http://localhost:5000/choice', true);
+  request.open('POST', `http://localhost:5000/jinn/${user_id}/choice`, true);
   request.setRequestHeader("Content-Type", "application/json");
+  request.setRequestHeader("Access-Control-Request-Method","POST");
+  request.setRequestHeader("Access-Control-Request-Headers","Content-Type");
+  request.setRequestHeader("Origin","http://localhost:5000");
 
   request.onload = function () {
       const resp = this.response;
